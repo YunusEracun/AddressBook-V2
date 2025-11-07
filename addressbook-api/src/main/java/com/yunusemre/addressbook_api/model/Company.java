@@ -1,5 +1,6 @@
-package com.yunusemre.addressbook_api.service;
+package com.yunusemre.addressbook_api.model;
 // Lombok importları
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -15,11 +16,16 @@ public class Company extends Entry {
     private String taxNumber;
     private String address;
 
-    public Company(String name, String email, String phoneNumber, String address, String taxNumber ) {
+    public Company(
+            @JsonProperty("firstName") String name, // "firstName" JSON'u name'e eşleşir
+            @JsonProperty("email") String email,
+            @JsonProperty("taxNumber") String taxNumber,
+            @JsonProperty("address") String address,
+            @JsonProperty("phoneNumber") String phoneNumber) {
+
         super(name, email, phoneNumber);
         this.taxNumber = taxNumber;
         this.address = address;
-
     }
 
     public String getTaxNumber() {

@@ -1,4 +1,4 @@
-package com.yunusemre.addressbook_api.controller;
+package com.yunusemre.addressbook_api.Controller;
 
 import com.yunusemre.addressbook_api.model.Entry;
 import com.yunusemre.addressbook_api.service.AddressBookService;
