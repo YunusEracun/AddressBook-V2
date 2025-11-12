@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-// JPA/Hibernate importları
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @DiscriminatorValue("COMPANY")
@@ -17,7 +17,7 @@ public class Company extends Entry {
     private String address;
 
     public Company(
-            @JsonProperty("firstName") String name, // "firstName" JSON'u name'e eşleşir
+            @JsonProperty("firstName") String name,
             @JsonProperty("email") String email,
             @JsonProperty("taxNumber") String taxNumber,
             @JsonProperty("address") String address,
@@ -37,6 +37,7 @@ public class Company extends Entry {
     }
 
     @Override
+    @JsonIgnore
     public String getDetails() {
         return "Tax Number: " + taxNumber + ", Address: " + address;
     }

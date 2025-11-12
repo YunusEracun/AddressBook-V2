@@ -16,26 +16,22 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Column;
-
-// JSON (Jackson/Gson) serileştirme
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-@Entity // Bu bir veritabanı tablosudur
+@Entity
 @Getter @Setter @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "entry_type")
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
-        property = "type") // JSON'daki "type" alanına bakarak karar ver
+        property = "type")
 @JsonSubTypes({
-        // Eğer type="person" ise Person sınıfını kullan
         @JsonSubTypes.Type(value = Person.class, name = "person"),
-        // Eğer type="company" ise Company sınıfını kullan
         @JsonSubTypes.Type(value = Company.class, name = "company")
 })
 public abstract class Entry {

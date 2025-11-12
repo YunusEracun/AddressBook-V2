@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-// JPA/Hibernate importları
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -23,13 +23,14 @@ public class Person extends Entry {
             @JsonProperty("phoneNumber") String phoneNumber,
             @JsonProperty("email") String email) {
 
-        super(name, email, phoneNumber); // Sıralamayı kontrol edin (Entry'ye göre)
+        super(name, email, phoneNumber);
         this.lastName = lastName;
     }
 
     public String getLastName() {return lastName;}
 
     @Override
+    @JsonIgnore
     public String getDetails() {
         return "Last Name: " + lastName;
     }

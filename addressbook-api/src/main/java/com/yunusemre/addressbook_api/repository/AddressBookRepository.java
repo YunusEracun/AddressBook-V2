@@ -2,13 +2,10 @@ package com.yunusemre.addressbook_api.repository;
 
 import com.yunusemre.addressbook_api.model.Entry;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.Optional;
 
-// Entry varlığını ve Primary Key tipini (Long) belirtir
-public interface AddressBookRepository extends JpaRepository<Entry, Long> {
+public interface AddressBookRepository extends JpaRepository<Entry, Long>, JpaSpecificationExecutor<Entry> {
 
-    // E-posta üzerinden O(1) hızlı arama için Spring Data JPA metodu:
     Optional<Entry> findByEmail(String email);
-
-    // Spring, bu metotları otomatik olarak uygulayacaktır.
 }
