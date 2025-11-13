@@ -7,7 +7,7 @@ import com.yunusemre.addressbook_api.repository.AddressBookRepository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // İşlemleri yönetmek için
+import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,7 +37,33 @@ public class AddressBookService {
         // Veritabanından sil
         repository.delete(entry);
     }
+    /**
+     * Mevcut bir kaydı ID'sine göre bulur ve günceller.
+     * @param id Güncellenecek kaydın veritabanı ID'si (URL'den gelir)
+     * @param entryDetails Postman'den gelen yeni verileri içeren nesne (JSON Body'den gelir)
+     * @return Veritabanına kaydedilen güncellenmiş nesne
+     * @throws NoSuchElementException Kayıt bulunamazsa fırlatılır
+     * @throws IllegalArgumentException E-posta zaten kullanımdaysa fırlatılır
+     */
+    @Transactional
+    public Entry updateEntry(Long id, Entry entryDetails) {
 
+        Entry existingEntry = repository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Entry not found with id: " + id));
+
+        if (!existingEntry.getEmail().equals(entryDetails.getEmail())) {
+            if (repository.findByEmail(entryDetails.getEmail()).isPresent()) {
+                throw new IllegalArgumentException("This email address is already in use by another entry.");
+            }
+        }
+        if (!existingEntry.getPhoneNumber().equals(entryDetails.getPhoneNumber())) {
+            if (repository.findByPhoneNumber(entryDetails.getPhoneNumber()).isPresent()) {
+                throw new IllegalArgumentException("This phone number is already in use by another entry.");
+            }
+        }
+        entryDetails.setId(id);
+        return repository.save(entryDetails);
+    }
 
     public Optional<Entry> findEntryByEmail(String email) {
         return repository.findByEmail(email);

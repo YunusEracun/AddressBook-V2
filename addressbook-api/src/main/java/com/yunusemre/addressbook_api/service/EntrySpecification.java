@@ -31,7 +31,6 @@ public class EntrySpecification {
                     predicates.add(criteriaBuilder.like(root.get("phoneNumber"), "%" + searchValue + "%"));
                     break;
                 case "lastname":
-                    // Sadece Person tipinde ara
                     predicates.add(criteriaBuilder.like(criteriaBuilder.lower(criteriaBuilder.treat(root, Person.class).get("lastName")), "%" + lowerSearchValue + "%"));
                     break;
                 case "taxnumber":

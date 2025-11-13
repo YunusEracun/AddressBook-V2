@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface AddressBookRepository extends JpaRepository<Entry, Long>, JpaSpecificationExecutor<Entry> {
 
     Optional<Entry> findByEmail(String email);
+    Optional<Entry> findByPhoneNumber(String phoneNumber);
 }

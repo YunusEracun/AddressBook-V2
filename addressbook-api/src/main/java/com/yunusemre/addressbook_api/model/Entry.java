@@ -42,7 +42,9 @@ public abstract class Entry {
     @SerializedName("firstName")
 
     private String name;
+    @Column(unique = true)
     private String email;
+    @Column(unique = true)
     private String phoneNumber;
 
     public Entry(String name, String email, String phoneNumber) {

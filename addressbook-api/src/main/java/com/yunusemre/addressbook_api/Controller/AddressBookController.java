@@ -26,6 +26,7 @@ public class AddressBookController {
     public List<Entry> getAllEntries() {
         return service.listAllEntries();
     }
+
     @GetMapping("/{email}")
     public ResponseEntity<Entry> getEntryByEmail(@PathVariable String email) {
 
@@ -52,6 +53,20 @@ public class AddressBookController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateEntry(@PathVariable Long id, @RequestBody Entry entryDetails) {
+        try {
+            Entry updatedEntry = service.updateEntry(id, entryDetails);
+
+            return ResponseEntity.ok(updatedEntry);
+
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
