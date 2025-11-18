@@ -71,7 +71,7 @@ public class AddressBookService {
 
     public List<Entry> searchEntries(String entryType, String searchField, String searchValue) {
 
-        // 1. (YENİ YOL) Dinamik sorguyu oluştur
+
         Specification<Entry> spec = EntrySpecification.findByCriteria(entryType, searchField, searchValue);
         return repository.findAll(spec);
 

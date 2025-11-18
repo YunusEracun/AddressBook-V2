@@ -1,4 +1,4 @@
-package com.yunusemre.addressbook_api.service;
+package com.yunusemre.addressbook_api.util;
 
 public final class Constants {
 
